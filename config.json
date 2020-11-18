@@ -1,0 +1,13 @@
+{
+    "cml_server": "172.18.29.121",
+    "cml_username": "admin",
+    "cml_password": "Cisc0123#",
+    "configs_base": "./configs",
+    "labs_directory": "./labs",
+    "smtp_server": "creme-vpn.marcuscom.com",
+    "archives_base": "./archives",
+    "db_file": "./cml.db",
+    "email_from": "noreply@marcuscom.com",
+    "smtp_tls": true,
+    "smtp_port": 587
+}

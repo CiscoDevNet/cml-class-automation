@@ -1,0 +1,12 @@
+{
+    "id": "efb4efd4-1954-11eb-adf8-acde48001130",
+    "students": [
+        "student1",
+        "student2",
+        "student3"
+    ],
+    "labdef": "STP_Lab",
+    "start_time": "2020-11-16 15:04",
+    "duration": 10,
+    "device_password": "cisco123"
+}
