@@ -10,7 +10,7 @@ In a nutshell, this solution does the following:
 
 * You schedule a lab to run for a set number of students at a specific time
 * A watchdog script will deploy the labs at the given time and then email the students
-* After the lab time window has expired, another watchdog script will archive the labs' configurations, stop them, and delete them
+* After the lab time window has expired, another watchdog script will archive the labs' configurations, stop them, and delete them from the CML server
 
 ## Requirements and Installation
 
@@ -51,7 +51,7 @@ Next, create a JSON file to represent the lab to be scheduled.  An example `stp-
 The syntax of this file is as follows:
 
 * `id`: A unique UUID to use for the lab.  There are many tools that can generate a UUID.  You can do this with the Python one-liner: `python -c 'import uuid;print(uuid.uuid1())'`
-* `students`: A list of one or more students' usernames for which the lab will be deployed
+* `students`: A list of one or more students' usernames for which the lab will be deployed (students will receive an email once their lab instance has been scheduled)
 * `labdef`: Name of the lab definition file found in the `labs_base` directory without any extension; this will be the lab that is deployed for each student
 * `start_time`: The date and time to start the lab in the format YYYY-MM-DD hh:mm
 * `duration`: The time (in hours) that the lab will run
@@ -64,6 +64,8 @@ For example:
 ./add-student --username jdoe --name "Jane Doe" --email jdoe@example.com
 ```
 
+Note: Only the student's username needs to be unique.  
+
 Then schedule the lab using the included `schedule-lab.py` script.  For example, if you created a `my-lab-schedule.json` file with the lab scheduling details:
 
 ```shell
@@ -74,8 +76,8 @@ At this point, one or more lab instances are scheduled in the future.
 
 ## Deploying The Labs
 
-The included `deploy-lab.py` script is designed to be run continuously, checking the database for new labs to deploy.  It will write any messages to its
-controlling terminal.  Run this script in its own terminal:
+The included `deploy-lab.py` script is designed to be run continuously, checking the database for new labs to deploy (and sleeping for one minute when there
+isn't any work to do).  It will write any messages to its controlling terminal.  Run this script in its own terminal:
 
 ```shell
 ./deploy-lab.py -c config.json
@@ -92,6 +94,9 @@ the lab definition).  For example:
 
 The students can then interact with the lab nodes either using the console ports or, if a management network was provided in the lab definition, the management IP
 addresses of each node.  Note: students never need to access CML directly.
+
+In order for the students to access their lab instance, the deploy script sets up the CML _breakout utility_ on the jump-host node that was described above.  Access
+to the jump-host is controlled via a randomly-generated password that will be sent to the students in the email.
 
 ## Stopping The Labs
 
