@@ -47,6 +47,10 @@ can be imported into CML to see how the topology looks.  Once you have built you
 After you create your lab definition, take a screenshot of the topology itself and save that as a PNG file in the same `labs_base` directory.  Call it the same name as the
 lab definition file with a `.png` extension.  See the included `STP_Lab.png` file as an example.
 
+**Note:** Since each lab instance will be deployed on the same CML server, make sure you have enough node (Personal or Enterprise) or seat (Education) licenses to accommodate
+all of the nodes that will be deployed in total (i.e., across all lab instances).  Additionally, each jump-host node will lease a DHCP address from the external network on which
+the CML server resides.  Make sure there are enough free IPv4 addresses there to accommodate each lab instance.
+
 Next, create a JSON file to represent the lab to be scheduled.  An example `stp-schedule.json` file is provided.
 The syntax of this file is as follows:
 
